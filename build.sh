@@ -44,7 +44,7 @@ git push origin master --force
 cd ~/moonlight-qt-carlosresu
 
 # Stage the updated submodule reference
-git add FFmpeg
+git add FFmpeg-carlosresu
 
 # Commit the updated submodule reference
 git commit -m "Update FFmpeg submodule to latest from upstream" || true
