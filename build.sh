@@ -122,7 +122,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   qmake6 moonlight-qt.pro
 
   # Compile the project in debug mode
-  make debug
+  make Debug
 
   # Copy the application to the Applications folder
   cp -R ./app/Moonlight.app /Applications/Moonlight.app
@@ -159,7 +159,7 @@ elif [[ "$PLATFORM" == "Linux" ]]; then
   qmake6 moonlight-qt.pro
 
   # Compile the project in debug mode
-  make debug
+  make Debug
 
   echo "Linux build completed successfully!"
 
@@ -184,7 +184,7 @@ elif [[ "$PLATFORM" == "MINGW"* || "$PLATFORM" == "CYGWIN"* || "$PLATFORM" == "M
   qmake6 moonlight-qt.pro
 
   # Compile the project in debug mode
-  make debug
+  make Debug
 
   # Generate the Windows installer
   ./scripts/build-arch.bat
