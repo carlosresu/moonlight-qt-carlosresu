@@ -131,7 +131,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Compile the project in debug mode
-  make debug
+  make release
 
   # Copy the application to the Applications folder
   cp -R ./app/Moonlight.app /Applications/Moonlight.app
@@ -171,7 +171,7 @@ elif [[ "$PLATFORM" == "Linux" ]]; then
   cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Compile the project in debug mode
-  make debug
+  make release
 
   echo "Linux build completed successfully!"
 
@@ -199,7 +199,7 @@ elif [[ "$PLATFORM" == "MINGW"* || "$PLATFORM" == "CYGWIN"* || "$PLATFORM" == "M
   cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Compile the project in debug mode
-  make debug
+  make release
 
   # Generate the Windows installer
   ./scripts/build-arch.bat
