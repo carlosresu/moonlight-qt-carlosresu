@@ -76,7 +76,19 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
 
   echo "Installing macOS dependencies..."
   brew install nasm yasm pkg-config automake autoconf cmake libtool texinfo git
-  brew install zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract two-lame xvid xz fontconfig fribidi gnutls lame libsoxr openssl libvpx libzmq qt create-dmg
+  brew install zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract two-lame xvid xz fontconfig fribidi gnutls lame libsoxr openssl qt create-dmg
+
+  # Skip unavailable dependencies or provide manual installation instructions
+  echo "Note: You'll need to install 'librtmp' and 'libzmq' manually as they are not available in Homebrew."
+
+  # Manual installation instructions
+  echo "To install 'libzmq' manually, run the following commands:"
+  echo "git clone https://github.com/zeromq/libzmq.git"
+  echo "cd libzmq && ./autogen.sh && ./configure && make && sudo make install"
+
+  echo "To install 'librtmp', run:"
+  echo "git clone https://git.ffmpeg.org/rtmpdump.git"
+  echo "cd rtmpdump/librtmp && make && sudo make install"
 
   # Set up FFmpeg build for macOS (ARM or x86)
   cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
