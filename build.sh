@@ -183,5 +183,9 @@ else
   exit 1
 fi
 
+brew cleanup
+brew cleanup --prune=all
+brew update-reset
+
 # Final success message
 echo "Moonlight-qt and FFmpeg have been successfully built and deployed for $PLATFORM!"
