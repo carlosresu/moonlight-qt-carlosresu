@@ -3,8 +3,18 @@ set -e  # Exit immediately if any command fails
 
 ### Common Setup for All Platforms ###
 
+# Detect platform and set home directory accordingly
+PLATFORM=$(uname)
+ARCH=$(uname -m)
+
+if [[ "$PLATFORM" == "MINGW"* || "$PLATFORM" == "CYGWIN"* || "$PLATFORM" == "MSYS"* ]]; then
+  HOME_DIR="$USERPROFILE"
+else
+  HOME_DIR="$HOME"
+fi
+
 # Navigate to the moonlight-qt repository directory
-cd ~/moonlight-qt-carlosresu
+cd "$HOME_DIR/moonlight-qt-carlosresu"
 
 # Initialize and update the git submodules
 git submodule update --init --recursive
@@ -22,7 +32,7 @@ git push origin master
 echo "Moonlight-qt repository successfully updated from upstream and pushed to your fork!"
 
 # Navigate to the FFmpeg submodule in moonlight-qt
-cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
+cd "$HOME_DIR/moonlight-qt-carlosresu/FFmpeg-carlosresu"
 
 # Add remote for the official FFmpeg repo if it doesn't exist
 if ! git remote | grep -q "upstream"; then
@@ -41,7 +51,7 @@ git merge upstream/master -m "Merge FFmpeg upstream/master into master" || true
 git push origin master --force
 
 # Navigate back to the moonlight-qt directory and update the submodule reference
-cd ~/moonlight-qt-carlosresu
+cd "$HOME_DIR/moonlight-qt-carlosresu"
 
 # Stage the updated submodule reference
 git add FFmpeg-carlosresu
@@ -56,10 +66,6 @@ git push origin master
 echo "FFmpeg submodule successfully updated from upstream, and pushed to your moonlight-qt fork!"
 
 ### Platform-specific Setup ###
-
-# Detect platform and architecture
-PLATFORM=$(uname)
-ARCH=$(uname -m)
 
 ### macOS Setup ###
 if [[ "$PLATFORM" == "Darwin" ]]; then
@@ -105,11 +111,11 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   echo "cd rtmpdump/librtmp && make && sudo make install"
 
   # Set up FFmpeg build for macOS (ARM or x86)
-  cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu/FFmpeg-carlosresu"
   ./build.sh  # Builds FFmpeg
 
   # Navigate back to the moonlight-qt directory
-  cd ~/moonlight-qt-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Create the target directory if it doesn't exist
   mkdir -p ./libs/mac/lib
@@ -120,6 +126,9 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
 
   # Run qmake to generate Makefiles
   qmake6 moonlight-qt.pro
+
+  # Change to the moonlight-qt directory for building
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Compile the project in debug mode
   make debug
@@ -145,21 +154,21 @@ elif [[ "$PLATFORM" == "Linux" ]]; then
   echo "Setting up for Linux..."
 
   # Install necessary tools for Linux
-  sudo apt update
-  sudo apt install -y libegl1-mesa-dev libgl1-mesa-dev libopus-dev libsdl2-dev libsdl2-ttf-dev libssl-dev libavcodec-dev libavformat-dev libswscale-dev libva-dev libvdpau-dev libxkbcommon-dev wayland-protocols libdrm-dev qt6-base-dev qt6-declarative-dev libqt6svg6-dev qml6-module-qtquick-controls qml6-module-qtquick-templates qml6-module-qtquick-layouts qml6-module-qtqml-workerscript qml6-module-qtquick-window qml6-module-qtquick
+  apt update
+  apt install -y libegl1-mesa-dev libgl1-mesa-dev libopus-dev libsdl2-dev libsdl2-ttf-dev libssl-dev libavcodec-dev libavformat-dev libswscale-dev libva-dev libvdpau-dev libxkbcommon-dev wayland-protocols libdrm-dev qt6-base-dev qt6-declarative-dev libqt6svg6-dev qml6-module-qtquick-controls qml6-module-qtquick-templates qml6-module-qtquick-layouts qml6-module-qtqml-workerscript qml6-module-qtquick-window qml6-module-qtquick
 
   # Set up FFmpeg build for Linux
-  cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu/FFmpeg-carlosresu"
   ./build.sh  # Builds FFmpeg
 
   # Navigate back to the moonlight-qt directory
-  cd ~/moonlight-qt-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Run qmake to generate Makefiles
   qmake6 moonlight-qt.pro
 
-  # Navigate back to the moonlight-qt directory
-  cd ~/moonlight-qt-carlosresu
+  # Change to the moonlight-qt directory for building
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
 
   # Compile the project in debug mode
   make debug
@@ -177,18 +186,18 @@ elif [[ "$PLATFORM" == "MINGW"* || "$PLATFORM" == "CYGWIN"* || "$PLATFORM" == "M
   dism /online /add-capability /capabilityname:Tools.Graphics.DirectX~~~~0.0.1.0
 
   # Set up FFmpeg build for Windows
-  cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu/FFmpeg-carlosresu"
   ./build.sh  # Builds FFmpeg
 
   # Navigate back to the moonlight-qt directory
-  cd ~/moonlight-qt-carlosresu
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
   
   # Run qmake to generate Makefiles
   qmake6 moonlight-qt.pro
 
-  # Navigate back to the moonlight-qt directory
-  cd ~/moonlight-qt-carlosresu
-  
+  # Change to the moonlight-qt directory for building
+  cd "$HOME_DIR/moonlight-qt-carlosresu"
+
   # Compile the project in debug mode
   make debug
 
@@ -203,9 +212,12 @@ else
   exit 1
 fi
 
-brew cleanup
-brew cleanup --prune=all
-brew update-reset
+# For macOS Homebrew cleanup
+if [[ "$PLATFORM" == "Darwin" ]]; then
+  brew cleanup
+  brew cleanup --prune=all
+  brew update-reset
+fi
 
 # Final success message
 echo "Moonlight-qt and FFmpeg have been successfully built and deployed for $PLATFORM!"
