@@ -17,3 +17,6 @@
 	path = libs
 	url = https://github.com/cgutman/moonlight-qt-prebuilts.git
 	shallow = true
+[submodule "FFmpeg-carlosresu"]
+	path = FFmpeg-carlosresu
+	url = https://github.com/carlosresu/FFmpeg-carlosresu.git
