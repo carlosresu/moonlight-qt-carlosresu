@@ -65,6 +65,18 @@ ARCH=$(uname -m)
 if [[ "$PLATFORM" == "Darwin" ]]; then
   echo "Setting up for macOS..."
 
+  # Function to install Homebrew packages only if they aren't already installed
+  install_if_missing() {
+    for package in "$@"; do
+      if ! brew list --formula | grep -q "^$package\$"; then
+        echo "Installing $package..."
+        brew install "$package"
+      else
+        echo "$package is already installed."
+      fi
+    done
+  }
+
   # Install necessary tools for macOS
   if ! command -v brew &> /dev/null; then
     echo "Homebrew not found. Installing Homebrew..."
@@ -75,8 +87,10 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   fi
 
   echo "Installing macOS dependencies..."
-  brew install nasm yasm pkg-config automake autoconf cmake libtool texinfo git
-  brew install zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract two-lame xvid xz fontconfig fribidi gnutls lame libsoxr openssl qt create-dmg
+  install_if_missing nasm yasm pkg-config automake autoconf cmake libtool texinfo git
+  install_if_missing zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d
+  install_if_missing frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract
+  install_if_missing two-lame xvid xz fontconfig fribidi gnutls lame libsoxr openssl qt create-dmg
 
   # Skip unavailable dependencies or provide manual installation instructions
   echo "Note: You'll need to install 'librtmp' and 'libzmq' manually as they are not available in Homebrew."
