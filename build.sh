@@ -89,8 +89,8 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   mkdir -p ./libs/mac/lib
 
   # Copy the necessary FFmpeg libraries to the moonlight-qt libs folder
-  cp ./FFmpeg/libavutil/libavutil.59.dylib ./libs/mac/lib/libavutil.59.dylib
-  cp ./FFmpeg/libavcodec/libavcodec.61.dylib ./libs/mac/lib/libavcodec.61.dylib
+  cp ./FFmpeg-carlosresu/libavutil/libavutil.59.dylib ./libs/mac/lib/libavutil.59.dylib
+  cp ./FFmpeg-carlosresu/libavcodec/libavcodec.61.dylib ./libs/mac/lib/libavcodec.61.dylib
 
   # Run qmake to generate Makefiles
   qmake6 moonlight-qt.pro
