@@ -76,7 +76,7 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
 
   echo "Installing macOS dependencies..."
   brew install nasm yasm pkg-config automake autoconf cmake libtool texinfo git
-  brew install zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract two-lame xvid xz fontconfig fribidi gnutls lame libsoxr librubberband openssl libvpx libzmq qt create-dmg
+  brew install zlib x264 x265 fdk-aac libvpx libvorbis libass libbluray opencore-amr opus aom dav1d frei0r theora libvidstab libvmaf rav1e rubberband sdl2 snappy speex srt tesseract two-lame xvid xz fontconfig fribidi gnutls lame libsoxr openssl libvpx libzmq qt create-dmg
 
   # Set up FFmpeg build for macOS (ARM or x86)
   cd ~/moonlight-qt-carlosresu/FFmpeg-carlosresu
