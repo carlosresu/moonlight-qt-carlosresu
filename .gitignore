@@ -6,3 +6,9 @@ build/
 config.tests/*/.qmake.stash
 config.tests/*/Makefile
 .DS_Store
+.qmake.cache
+.qmake.stash
+config.log
+app/Info.plist
+app/Info.plist-e
+app/qml_qmlcache.qrc
