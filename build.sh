@@ -144,8 +144,8 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
   rm -rf ./libs/mac/lib/libavutil.59.dylib
   rm -rf ./libs/mac/lib/libavcodec.61.dylib
 
-  # Create DMG for non-development use
-  ./scripts/generate-dmg.sh
+  # # Create DMG for non-development use
+  # ./scripts/generate-dmg.sh
 
   echo "macOS build and file copy completed successfully!"
 
@@ -201,9 +201,9 @@ elif [[ "$PLATFORM" == "MINGW"* || "$PLATFORM" == "CYGWIN"* || "$PLATFORM" == "M
   # Compile the project in debug mode
   make release
 
-  # Generate the Windows installer
-  ./scripts/build-arch.bat
-  ./scripts/generate-bundle.bat
+  # # Generate the Windows installer
+  # ./scripts/build-arch.bat
+  # ./scripts/generate-bundle.bat
 
   echo "Windows build completed successfully!"
 
